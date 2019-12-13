@@ -1,0 +1,170 @@
+/** On reprend le style par défaut des icones 32px **/
+
+@import url('../../defaut_32/css/defaut.css');
+
+/** barres de menus et d'icônes **/
+
+
+#barre_menus0_div , #barre_menus1_div , #barre_menus2_div , #barre_icone1_div , #barre_icone2_div{
+     background-color: #266795;
+     background-image: none;
+     background-repeat: no-repeat;
+     border-color: #266795;
+}
+
+.yui-skin-sam .yuimenubar {
+    background-color: #266795;
+     background-image: none;
+     background-repeat: no-repeat;
+     border-color: #266795;
+    
+}
+
+.yui-skin-sam .yuimenubaritem-selected {
+    background-color: black;
+     background-image: none;
+     background-repeat: no-repeat;
+     border-color: #266795;
+    
+}
+
+.yui-skin-sam .yuimenubaritemlabel {
+    color: white;
+    border-color: #266795;
+}
+
+/** barre laterale **/
+
+#div_barre_laterale_ouverte {
+    background-color: #266795 !important;
+     background-image: none !important;
+     background-repeat: no-repeat !important;
+}
+
+#div_barre_laterale_fermee {
+    background-color: #266795 !important;
+     background-image: none !important;
+     background-repeat: no-repeat !important;
+}
+
+div.fond_icones, td.fond_icones {
+    background-color: #266795;
+}
+
+/** YUI : ONGLETS */
+
+.yui-skin-sam .yui-navset .yui-nav .selected a, .yui-skin-sam .yui-navset .yui-nav .selected a:focus, .yui-skin-sam .yui-navset .yui-nav .selected a:hover  {
+     background-color: #266795;
+     background-image: none;
+     background-repeat: no-repeat;
+     border-color: #266795;
+}
+
+.yui-skin-sam .yui-navset .yui-nav, .yui-skin-sam .yui-navset .yui-navset-top .yui-nav {
+    border-color: #266795;
+}
+
+.yui-skin-sam .yui-navset .yui-content {
+    background-color: white;   
+}
+
+/** Accueil **/
+div#div_fond_accueil {
+    background-color: white !important;
+    background-image: none !important;
+}
+
+.accueil2.transparent {
+    background-color: #266795;
+}
+
+.accueil2.transparent a {
+    color: white;
+}
+
+a.accueil_titre_2:hover {
+    color: #ad0d0d;
+}
+
+a.accueil_titre12:hover {
+    color: #ad0d0d;
+}
+
+/************************************************************************************************************/
+/************************************************************************************************************/
+/************************************************************************************************************/
+/* DIFFERENTS MODULES */
+/* Par simplicité, on regroupe dans cette feuille de style les modifs apportées aux feuilles spécifiques aux différents modules */
+/************************************************************************************************************/
+/************************************************************************************************************/
+/************************************************************************************************************/
+
+/** CATALOGAGE **/ 
+
+div.tvs_formulator_champ_menu {
+    background-color: #266795;
+     background-image: none;
+     background-repeat: no-repeat;
+     border-color: #266795;
+}
+
+.tvs_formulator_champ_menu[role="cellule_titre"] {
+    color:white;   
+}
+
+.tvs_formulator_champ_conteneur_elements {
+    border-color: white;   
+}
+
+/** RECHERCHE **/
+
+div#div_barre_recherche_recherchator {
+    background-color: #266795;
+     background-image: none;
+     background-repeat: no-repeat;
+     border-color: #266795;
+}
+
+div#div_barre_liste_recherchator {
+    background-color: #266795;
+     background-image: none;
+     background-repeat: no-repeat;
+     border-color: #266795;
+     color:white; 
+}
+
+div#div_barre_notice_recherchator {
+    background-color: #266795;
+     background-image: none;
+     background-repeat: no-repeat;
+     border-color: #266795;
+     color:white; 
+}
+
+div#div_barre_paniers {
+    background-color: #266795;
+     background-image: none;
+     background-repeat: no-repeat;
+     border-color: #266795;
+     color:white; 
+}
+
+div#div_barre_recherche_statator {
+    background-color: #266795;
+     background-image: none;
+     background-repeat: no-repeat;
+     border-color: #266795;
+     color:white; 
+}
+
+div#div_barre_liste_statator {
+    background-color: #266795;
+     background-image: none;
+     background-repeat: no-repeat;
+     border-color: #266795;
+     color:white; 
+}
+
+div#div_barre_liste_recherchator td,div#div_barre_recherche_recherchator td, div#div_barre_notice_recherchator td{
+    color: white;
+}

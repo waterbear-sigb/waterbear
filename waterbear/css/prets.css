@@ -1,0 +1,103 @@
+#div_formulaire {
+    position: relative;
+    padding: 5px;
+    margin: 0px;
+    width: 99%; 
+    height: 30px;
+ }
+
+#div_indicateurs {
+    position: relative;
+    padding: 5px;
+    margin: 0px;
+    width:  99%;
+    height: 15%;
+    
+    
+ }
+ 
+#div_resultat {
+    position: relative;
+    padding: 5px;
+    margin: 0px;
+    width: 99%; 
+    min-height: 50%;
+    
+ }
+ 
+ #div_compteur {
+    position: relative;
+    padding: 5px;
+    margin: 0px;
+    width: 99%; 
+    height: 10%;
+    
+ }
+ 
+ table.div_compteur {
+    border-style: solid;
+    border-width: 1px;
+    border-collapse: collapse;
+ }
+ 
+ .div_compteur_depasse {
+    background-color: red;
+    border-style: solid;
+    border-width: 1px;
+ }
+ 
+ .div_compteur_ok {
+    border-style: solid;
+    border-width: 1px;
+ }
+
+.div_indicateur {
+    position: absolute;
+    border-style: dashed;
+    border-width: 1px;
+    border-color: blue;
+    padding: 5px;
+    margin: 0px;
+    overflow: auto;
+    background-color: #edf5ff;
+ }
+ 
+ 
+.div_indicateur_label {
+    position: absolute;
+    font-weight: bold;
+    padding: 5px;
+    margin: 0px;
+ }
+ 
+
+span.div_bouton {
+    position: static;
+    padding: 5px;
+    margin: 5px;
+    border-style: solid;
+    border-width: 1px;
+    background-color: #CAE2F4;
+ }
+ 
+a.div_bouton {
+    font-weight: bold;
+    text-decoration: none;
+    color: #4A4A4A;
+ }
+
+/** isbd famille **/
+
+.isbd_famille td {
+    background-color: #EDF5FF;
+    padding-left: 3px;
+    padding-right:3px ;
+    border-collapse: collapse;
+    border-color: silver;
+    border-style: solid;
+    border-width: 2px;
+}
+
+table.isbd_famille {
+    border-collapse: collapse;
+}

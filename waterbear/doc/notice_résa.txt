@@ -1,0 +1,103 @@
+Structure Notice de résa
+
+200 infos générales
+ $a : date création
+ $b : date de fin
+ $f: état (cf liste)
+ $g : bib de destination
+ $l : date de mise à dispo
+ $m : date de fin de validité
+ $p : date message
+
+410 lecteur
+ cf ci-dessous champ lecteur
+
+430 notice biblio
+ $3 : ID
+ $a : titre
+ $b : auteur
+
+420 Exeplaires demandés
+ $3 : ID
+ $a : cab
+ $b : section
+ $c : bib
+ $d : cote
+ $e : type doc
+
+440 Exemplaire affecté
+idem 420
+
+450 Prêt
+ $3 : ID
+ $a : ID exe
+ $b : ID biblio
+ $c : ID lecteur
+ $d : cab exe
+ $f : date prêt
+ $g : date retour prévu
+ $h : date retour réel
+
+Codes
+5  : demande de résa (non géré à ce jour)
+10 : résa non dispo
+15 : résa dispo mais non affectée (ex. résa d'un doc en rayon) 
+20 : résa affectée en transit
+25 : résa affectée disponible (mise à dispo)
+30 : prêtée
+35 : délai dépassé
+
+40 : échec : délai de réservation dépassé
+41 : échec : résa non récupérée
+42 : échec : résa annulée par lecteur
+43 : échec : résa annulée par bib.=======
+40 : échec
+
+###############################################################################################################################
+###############################################################################################################################
+
+Notice de prêt
+
+200 infos générales
+ $a : date de prêt
+ $b : date de retour prévu
+ $c : date de retour réel
+ $g : bib de prêt
+ $h : bib de retour
+ $n : niveau de rappel (0 à la création)
+ $o : date dernier rappel (date retour prévu à la création)
+ $p : nb de prolongations (0 à la création)
+ $rap1, $rap2, ... date de rappel 1,2, ...
+
+410 lecteur
+ cf ci-dessous champ lecteur
+
+430 notice biblio
+ $3 : ID
+ $a : titre
+ $b : auteur
+
+420 Exeplaires demandés
+ $3 : ID
+ $a : cab
+ $b : section
+ $c : bib
+ $d : cote
+ $e : type doc
+
+###############################################################################################################################
+###############################################################################################################################
+
+champ lecteur dans notice prêt, résa, abonnement, payement...
+
+$3 lien
+$5 ID chef de famille (200$3)
+$a cab
+$b nom
+$c prénom
+$d naissance
+$e sexe
+$f CSP
+$g quartier
+
+

@@ -1,0 +1,56 @@
+#################################################################################
+Pour installer Waterbear :
+
+1. Vous devez disposer d'un serveur avec un serveur web (type Apache), PHP et MySQL
+2. Créez une base de données (donnez-lui le nom que vous voulez, par exemple 'waterbear') et importez-y les tables de la base de données en utilisant le script DB.sql. Pour ce faire, il est recommandé d'utiliser un outil du type PhpMyAdmin. Choisissez l'encodage utf-8 (utf8_general_ci)
+3. Copiez le répertoire waterbear sur votre serveur web.
+4. Renommez waterbear/conf/perso_modele.php en perso.php
+5. Modifiez les paramètres de perso.php en indiquant :
+   > Les paramètres mysql
+   > le chemin d'installation sur votre serveur
+   > l'url du site
+   > un mot de passe pour le superadmin
+
+6. Pour accéder à waterbear, faites pointer votre navigateur sur le fichier bib.php (dans le répertoire Waterbear)
+7. La base de données fournie avec l'installation n'est pas forcément à jour. Voyus devez donc lancer une mise à jour en vous connectant en administrateur. Depuis la page d'accueil >> MetaWaterbear >> effectuer les mises à jour
+8. Une fois Waterbear installé, changez l'utilisateur standard dans le registre : system/users/...
+
+NOTE : par défaut, les messages d'erreurs ou warnings PHP ne sont pas affichés. En cas de problème, vous pouvez souhaiter les afficher pour connaitre la source du problème. Pour cela, dans le fichier perso.php, modifiez la valeur ini_set ("display_errors", "Off"); à "on".
+Vous pouvez également logger les erreurs en décommentant la directive //ini_set ("error_log", "/home/moccam/waterbear/LOG/php_log.log"); et en indiquant un chemin valide sur votre serveur
+
+#################################################################################
+Pour les mises à jour
+
+1. Faites une sauvegarde de perso.php
+2. remplacez le répertoire waterbear par la nouvelle version
+3. replacez perso.php à sa place
+4. Dans waterbear, lancez les mises à jour de la base de données. Depuis la page d'accueil : MetaWaterbear >> effectuer les mises à jour
+
+#################################################################################
+Echanges Waterbear <--> Bokeh
+
+La présente installation ne comprend pas le catalogue en ligne pour le public Opac. Pour ce faire, vous pouvez utiliser Bokeh ou d'autres logiciels.
+Vous devez télécharger et installer Bokeh : http://www.bokeh-library-portal.org/
+Il faut ensuite effectuer les paramétrages nécessaires pour assurer l'échange d'informations entre Waterbear et Bokeh. Ceux-ci sont de 2 nature :
+1) les exports réguliers de notices de Waterbear vers Bokeh
+2) Les web-services qui assurent les échanges en temps réel (pour la disponibilité des exemplaires, les réservations...)
+Concernant les web-services, pour l'instant la version "standard" de Bokeh nécessite une modification pour être compatible avec Waterbear
+Pour les mises à jour régulières, il faut exécuter périodiquement un script qui va récupérer les notices de Waterbear et les envoyer à Bokeh.
+Vous trouverez un exemple d'un script PHP assurant cette fonction dans le répertoire d'installation : echange_wb_bokeh.php.
+Une documentation sommaire se trouve au début du script
+
+#################################################################################
+Documentation
+
+1. Sur le site http://waterbear.info
+2. dans le répertoire waterbear/doc
+
+#################################################################################
+Licence
+
+GPL : http://www.gnu.org/licenses/gpl-3.0.txt
+
+#################################################################################
+Des questions ?
+
+Contactez Quentin Chevillon : moccam@free.fr

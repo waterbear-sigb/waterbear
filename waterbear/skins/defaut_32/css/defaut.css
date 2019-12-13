@@ -1,0 +1,114 @@
+/** style général **/
+
+* {
+    font-family: sans-serif;
+    font-size: 15px;
+}
+
+input  {
+    height: 30px;
+}
+
+select  {
+    height: 30px;
+}
+
+/** barres de menus et d'icônes **/
+
+
+#barre_menus0_div {
+     height:32px;
+}
+
+#barre_menus1_div {
+    height:32px ; 
+}
+
+#barre_menus2_div {
+    height:32px ;
+}
+
+#barre_icone1_div {
+    top:31px ;
+    height:44px ; 
+}
+
+#barre_icone2_div {
+     top:31px ; 
+     height:44px ;
+}
+
+/************************************************************************************************************/
+/* Barre latérale */
+
+#div_barre_laterale_ouverte {
+    top:77px ;
+}
+
+#div_barre_laterale_fermee {
+    top:77px ;
+}
+
+/************************************************************************************************************/
+/* Zone MAIN */
+
+div.div_main {
+    top:77px ; 
+}
+
+div.div_main_extended {
+    top:77px ; 
+}
+
+/************************************************************************************************************/
+/* Recherche rapide */
+
+#champ_recherche_rapide {
+    height: 23px;
+    margin-top: 8px;
+}
+
+#champ_recherche_rapide.champ_recherche_rapide_blur {
+    font-size: 12px;
+}
+
+#champ_recherche_rapide.champ_recherche_rapide_focus {
+    font-size: 12px;
+}
+
+/************************************************************************************************************/
+/************************************************************************************************************/
+/************************************************************************************************************/
+/* DIFFERENTS MODULES */
+/* Par simplicité, on regroupe dans cette feuille de style les modifs apportées aux feuilles spécifiques aux différents modules */
+/************************************************************************************************************/
+/************************************************************************************************************/
+/************************************************************************************************************/
+
+
+/************************************************************************************************************/
+/* RECHERCHE */
+
+div#div_barre_recherche_recherchator {
+    height : 44px;
+}
+
+div#div_barre_liste_recherchator {
+    height : 44px;
+}
+
+div#div_barre_notice_recherchator {
+    height : 44px;
+}
+
+div#div_barre_paniers {
+    height : 44px;
+}
+
+div#div_barre_recherche_statator {
+    height : 44px;
+}
+
+div#div_barre_liste_statator {
+    height : 44px;
+}

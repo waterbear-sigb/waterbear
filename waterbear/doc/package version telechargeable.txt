@@ -1,0 +1,10 @@
+Mise à jour de la version téléchargeable de Waterbear
+
+> Partir de la dernière version téléchargeable et renommer le rep waterbear en waterbear_old
+> Prendre les dernières sources et les mettre dans la version téléchargeable en waterbear
+> supprimer le .svn
+> supprimer tous les fichiers de la racine sauf bib.php et bib_ws.php
+> Remettre le config.php et perso_modele.php de la dernière version téléchargeable (voir si modifs depuis la dernière maj)
+> supprimer répertoire test
+> recréer répertoires LOG, upload, download
+> une fois fait supprimer waterbaer_old

@@ -1,0 +1,288 @@
+/////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////
+
+Types de champs de recherche :
+
+TEXTBOX
+
++ parametres
++ !!booleens
+     + nom_plugin => catalogue/recherches/booleens/standard
++ !!icones
+     + nom_plugin => catalogue/recherches/icones_criteres/defaut
++ !!types_recherches
+     + nom_plugin => catalogue/recherches/listes_types_recherches/juste_egal
++ ##valeur => GET/ID_exe 
++ ??critere_intitule => bib/catalogue/recherches/criteres/pret/standard/id_exe
++ autoplugin
+     + nom_plugin => catalogue/recherches/criteres/pret/standard/id_exe
++ critere => a_id_exe
++ type_champ => textbox
+
+=========================================================================
+
+AUTOCOMPLETE
+
++ parametres
++ !!booleens
+     + nom_plugin => catalogue/recherches/booleens/standard
++ !!icones
+     + nom_plugin => catalogue/recherches/icones_criteres/defaut
++ !!types_recherches
+     + nom_plugin => catalogue/recherches/listes_types_recherches/juste_egal
++ ##valeur => GET/ID_biblio
++ ??critere_intitule => bib/catalogue/recherches/criteres/pret/standard/id_biblio
++ autoplugin
+     + nom_plugin => catalogue/recherches/criteres/pret/standard/id_biblio
++ critere => a_id_biblio
++ type_champ => autocomplete
++ ws_url => bib_ws.php?module=autocomplete/biblio/standard/vedette&
+
+=========================================================================
+
+SELECT
+
++ parametres
++ !!booleens
+     + nom_plugin => catalogue/recherches/booleens/standard
++ !!icones
+     + nom_plugin => catalogue/recherches/icones_criteres/defaut
++ !!liste_choix
+     + nom_plugin => div/get_liste_choix
+     + parametres
+          + nom_liste => catalogue/catalogage/grilles/exemplaire/bibliotheque
++ !!types_recherches
+     + nom_plugin => catalogue/recherches/listes_types_recherches/select
++ ??critere_intitule => bib/catalogue/recherches/criteres/pret/standard/bib_exe
++ autoplugin
+     + nom_plugin => catalogue/recherches/criteres/pret/standard/bibliotheque
++ critere => a_bib_exe
++ type_champ => select
+
+
+=========================================================================
+
+PANIER
+
++ parametres
++ !!booleens
+     + nom_plugin => catalogue/recherches/booleens/standard
++ !!types_recherches
+     + nom_plugin => catalogue/recherches/listes_types_recherches/panier
++ ??critere_intitule => bib/catalogue/recherches/criteres/biblio/standard/panier
++ autoplugin
+     + nom_plugin => catalogue/recherches/criteres/pret/standard/panier
++ critere => ID
++ !!icones
+     + nom_plugin => catalogue/recherches/icones_criteres/defaut
++ type_champ => autocomplete
++ ws_url => bib_ws.php?module=autocomplete/pret/panier/standard&
+
+=========================================================================
+
+PANIER D'AUTRES OBJETS
+
++ parametres
++ !!booleens
+     + nom_plugin => catalogue/recherches/booleens/standard
++ ??critere_intitule => bib/catalogue/recherches/criteres/pret/standard/panier_biblio
++ autoplugin
+     + nom_plugin => catalogue/recherches/criteres/pret/standard/panier_biblio
++ critere => ID
++ icones
+     + 01 - supprimer
+          + action => recherchator.delete_champ(#id#)
+          + alt =>
+          + src => IMG/icones/cross.png
+     + 02 - monter
+          + action => recherchator.conteneur_recherche.monte_element(#id#)
+          + alt =>
+          + src => IMG/icones/arrow_up.png
+     + 03 - descendre
+          + action => recherchator.conteneur_recherche.descend_element(#id#)
+          + alt =>
+          + src => IMG/icones/arrow_down.png
+     + 04 - ouvrir
+          + action => recherchator.ouvrir_lien(#id#, 'bib.php?module=catalogue/recherches/formulaires/biblio/complet')
+          + alt =>
+          + src => IMG/icones/page_go.png
++ liste_types_liens
+     + 01 - bidon
+          + intitule => notice biblio
+          + valeur => 430
++ sens_lien => explicite
++ type_champ => panier_lien
++ type_obj_lien => biblio
++ ws_url => bib_ws.php?module=autocomplete/biblio/panier/standard&
+
+
+
+=========================================================================
+
+JOINTURE [ici exemple d'une recherche de prêts à partir de l'emplacement de l'exemplaire)
+
++ parametres
++ !!booleens
+     + nom_plugin => catalogue/recherches/booleens/standard
++ !!icones
+     + nom_plugin => catalogue/recherches/icones_criteres/defaut
++ !!liste_choix
+     + nom_plugin => div/get_liste_choix
+     + parametres
+          + nom_liste => catalogue/catalogage/grilles/exemplaire/emplacement
++ !!types_recherches
+     + nom_plugin => catalogue/recherches/listes_types_recherches/select
++ ??critere_intitule => bib/catalogue/recherches/criteres/pret/standard/emplacement
++ autoplugin
+     + nom_plugin => catalogue/recherches/criteres/pret/standard/emplacement
++ critere => ID
++ schema_jointure ------------------> remplacera valeur_critere (après qu'on aura injecté dedans valeur_critere et type_recherche
+     + bool_parse_contenu => 0
+     + criteres
+          + 01
+               + intitule_critere => a_emplacement
+               + type_recherche => @type_recherche ------------------> sera remplacé par type_recherche
+               + valeur_critere => @valeur_critere ------------------> sera remplacé par valeur_critere
+     + format_resultat => liste -----------> important !!!
+     + type_objet => exemplaire
++ sens_lien => explicite
++ type_champ => select ------------------> type_champ peut être textbox, select ou autocomplete : les autres paramètres peuvent varier en fonction
++ type_obj_lien => exemplaire
+
+=========================================================================
+
+DATE
+
+Ce n'est pas à proprement parler un type spécifique, mais on peut rajouter :
+
++ plugin_formate_critere
+	+ nom_plugin => div/util_dates_var
+
+pour utiliser des racourcis de recherche comme an, an-1...
+
++ !!types_recherches
+	+ nom_plugin => catalogue/recherches/listes_types_recherches/date
+
+critères de recherche spécifiques dates
+
+=========================================================================
+
+TRANCHES PREDEFINIES [ici exemple de recherche de lecteurs ayant des prêts dans tel ou tel panier dynamique]
+
+on utilise un type_champ select mais avec des types_recherches comme pour un panier (ou un panier d'autres objets)
+De même les paramètres aditionnels sont ceux d'un panier (sens lien...)
+Les choix proposés par le select correspondent en fait à des chemins de paniers qui se trouvent dans langues/listes/div/paniers_waterbear
+ils ont la forme :
+
++ prets_par_annee
+	+ _intitules
+     		+ waterbear|recherches|par_annÃ©es|an
+          		+ _fr => cette annÃ©e
+     		+ waterbear|recherches|par_annÃ©es|an-1
+          		+ _fr => l'annÃ©e derniÃ¨re
+
+Ou bien waterbear|recherches|tranche_age|# (terminé par #) si on veut une ventilation parmi tous les paniers d'un répertoire
+
+Il faut utiliser un plugin_formate_critere pour transformer les | en /
+
+
+
++ parametres
++ !!booleens
+     + nom_plugin => catalogue/recherches/booleens/standard
++ !!icones
+     + nom_plugin => catalogue/recherches/icones_criteres/defaut
++ !!liste_choix
+     + nom_plugin => div/get_liste_choix
+     + parametres
+          + nom_liste => div/paniers_waterbear/prets_par_annee
++ !!types_recherches
+     + nom_plugin => catalogue/recherches/listes_types_recherches/panier_lien
++ ??critere_intitule => bib/catalogue/recherches/criteres/lecteur/standard/pret_annee
++ autoplugin
+     + nom_plugin => catalogue/recherches/criteres/lecteur/standard/pret_annee
++ critere => ID
++ plugin_formate_critere
+     + alias
+          + chaine => texte
+     + alias_retour
+          + texte => chaine
+     + nom_plugin => div/util_string
+     + parametres
+          + traitements
+               + 01 - remplacer pipe par slash
+                    + a_remplacer => |
+                    + methode => str_replace
+                    + remplace => /
++ sens_lien => implicite
++ type_champ => select
++ type_obj_lien => pret
+
+
+=========================================================================
+
+COMPTAGE
+
+Même principe que la recherche par panier on recherche des objets qui sont dans un panier ou qui sont liés à des objets qui sont dans un panier, mais ici,
+on peut spécifier le nombre d'objets liés. On peut omettre le nom du panier, dans ce cas il comptera le nombre d'objets liés.
+
++ parametres
++ !!booleens
+     + nom_plugin => catalogue/recherches/booleens/standard
++ !!types_recherches
+     + nom_plugin => catalogue/recherches/listes_types_recherches/nombre
++ ??critere_intitule => bib/catalogue/recherches/criteres/biblio/standard/nb_exe
++ autoplugin
+     + nom_plugin => catalogue/recherches/criteres/biblio/standard/nb_exe
++ critere => ID
++ icones
+     + 01 - supprimer
+          + action => recherchator.delete_champ(#id#)
+          + alt =>
+          + src => IMG/icones/cross.png
+     + 02 - monter
+          + action => recherchator.conteneur_recherche.monte_element(#id#)
+          + alt =>
+          + src => IMG/icones/arrow_up.png
+     + 03 - descendre
+          + action => recherchator.conteneur_recherche.descend_element(#id#)
+          + alt =>
+          + src => IMG/icones/arrow_down.png
+     + 04 - ouvrir
+          + action => recherchator.ouvrir_lien(#id#, 'bib.php?module=catalogue/recherches/formulaires/exemplaire/standard')
+          + alt =>
+          + src => IMG/icones/page_go.png
++ liste_types_liens
+     + 01 - bidon
+          + intitule => exemplaire
+          + valeur => 997
++ sens_lien => explicite
++ type_champ => comptage
++ type_obj_lien => exemplaire
++ ws_url => bib_ws.php?module=autocomplete/exemplaire/panier/standard&
+
+
+
+
+/////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////
+
+Pour lancer une recherche automatiquement : 
+
+mettre dans les paramètres de la page (bib) : validation_auto => 1
+
+Pour passer des critères de recherche via l'url : mettre dans la définition du champ de recherche :
+
+##valeur => GET/ID_exe
+
+(sera remplacé par $ID_exe fourni dans l'URL
+
+La variable GET (correspondant à $_GET) est fournie au plugin qui génère le formulaire. ATTENTION si ce plugin utilise des plugins inclus (ce qui est quasiment toujours le cas), il faut transmettre la variable GET aux plugins inclus.
+On écrira donc qqchse du type :
+
++ !!04 - id lecteur
++ nom_plugin => catalogue/recherches/criteres/pret/standard/id_lecteur
++ parametres
+     + ##GET => GET
+
+

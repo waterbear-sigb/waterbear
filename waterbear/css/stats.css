@@ -1,0 +1,72 @@
+#div_tab_liste_statator {
+    overflow: scroll;
+}
+
+.stat_table {
+    width: 95%;
+    border-collapse: collapse;
+}
+
+.stat_tr_titre {
+    
+}
+
+.stat_td_titre {
+    font-weight: bold;
+    background-color: gray;
+    border-width: 1px;
+    border-style: solid;
+    border-color: black;
+}
+
+.stat_tr_ligne {
+    
+}
+
+.stat_td_ligne_intitule {
+    font-weight: bold;
+    background-color: gray;
+    border-width: 1px;
+    border-style: solid;
+    border-color: black;
+}
+
+.stat_td_ligne_cell {
+    border-width: 1px;
+    border-style: solid;
+    border-color: black;
+}
+
+.stat_td_ligne_total {
+    font-weight: bold;
+    background-color: silver;
+    border-width: 1px;
+    border-style: solid;
+    border-color: black;
+}
+
+.stat_tr_total {
+    
+}
+
+.stat_td_total {
+    font-weight: bold;
+    background-color: silver;
+    border-width: 1px;
+    border-style: solid;
+    border-color: black;
+}
+
+img.icone_stat {
+    cursor: pointer;
+}
+
+#div_tab_chart_statator {
+    width: 95%;
+	height: 600px;
+    margin: 0px;
+    padding:0px;
+    /**width: 100%;
+    height:100%;**/
+	font-size	: 11px;
+}

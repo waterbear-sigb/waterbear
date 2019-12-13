@@ -1,0 +1,143 @@
+{\rtf1\ansi\ansicpg1252\deff0\deflang1036{\fonttbl{\f0\fswiss\fcharset0 Arial;}}
+{\*\generator Msftedit 5.41.15.1503;}\viewkind4\uc1\pard\qc\b\f0\fs28 Utiliser les plugins\par
+\par
+\pard\ul\fs24 I Les notions de plugin et de point d'acc\'e8s\par
+\par
+\ulnone\b0\fs20 Un plugin est une fonction PHP qui n'est pas appel\'e9e directement par un script, mais via les param\'e9trages effectu\'e9s dans le registre. Les plugins permettent de rendre le logiciel extr\'eamement modulable. En effet, on pourra param\'e9trer dans le registre quel plugin utiliser pour ex\'e9cuter telle ou telle t\'e2che. Par ailleurs, on pourra \'e9galement fournir des param\'e8tres au plugin via le registre.\par
+\par
+A proprement parler, le \b plugin\b0  est un script (et une fonction). Mais on peut \'e9galement d\'e9signer par ce nom les informations du registre permettant d'ex\'e9cuter cette fonction (emplacement du fichier, nom de la fonction, param\'e8tres). Ces informations sont stock\'e9es dans profiles/defaut/plugins/plugins.\par
+\par
+On d\'e9sige en revanche par \b point d'acc\'e8s \b0 les informations fournies pour appler le plugin. On peut appeler un m\'eame plugin \'e0 des dizaines d'endroits diff\'e9rents, \'e0 chaque fois en fournissant des param\'e8tres diff\'e9rents.\par
+\ul\b\fs24\par
+\par
+II Appeler un plugin dans un script\par
+\par
+\ulnone\b0\fs20 Pour appeler un plugin dans un script on utilise la fonction\par
+\par
+array \b applique_plugin \b0 (point_d_acces, parametres);\par
+\par
+La fonction retourne toujours une Array ayant la forme\par
+$retour["succes"] => 0 ou 1\par
+$retour["erreur"] => message d'erreur \'e9ventuel\par
+$retour["resultat"] => le r\'e9sultat (qui lui-m\'eame est souvent une array)\par
+\par
+Le 2e argument, $parametres est toujours une array (\'e9ventuellement vide)\par
+\par
+Le 1e argument est le point d'acc\'e8s. Il peut \'eatre une cha\'eene de caract\'e8re ou une array.\par
+\par
+\ul Si c'est une cha\'eene de caract\'e8re\ulnone , WB ira chercher le point d'acc\'e8s dans le registre \'e0 partir de profiles/defaut/plugins/points_acces (cette possibilit\'e9 est d\'e9pr\'e9ci\'e9e)\par
+\par
+\ul Si c'est une array\ulnone , elle doit avoir la forme :\par
+\b > $point_d_acces["nom_plugin"] \b0 => chaine de caract\'e8res indiquant l'emplacement du plugin (de la forme catalogue/import_export/main/biblio/unimarc_standard)\par
+Ce chemin peut indiquer \b soit\b0  l'emplacement de la d\'e9finition du plugin dans le registre \'e0 partir de profiles/defaut/plugins/plugins \b soit\b0  l'emplacement du script \'e0 partir du r\'e9pertoire  include/plugins.\par
+(voir la distinction entre plugins simples et plugins virtuels)\par
+\par
+\b > $point_d_acces["parametres"] \b0 => une array contenant les param\'e8tres pass\'e9s au plugin PAR LE SCRIPT. (se rajoute aux param\'e8tres pass\'e9s via le registre)\par
+\par
+\b La bonne pratique \b0 veut que le point d'acc\'e8s (qu'il s'agisse d'une cha\'eene ou d'un tableau) soit lui-m\'eame d\'e9fini dans le registre. SOIT le plugin est appel\'e9 dans une page, auquel cas, on indiquera le point d'acc\'e8s dans le noeud _parametres de la page, SOIT il est appel\'e9 depuis un autre plugin, auquel cas on indiquera le point d'acc\'e8s dans le noeud parametres du plugin.\par
+\par
+Dans les 2 cas, l'utilisation dans le script est tr\'e8s simple, car les variables d\'e9finies dans les param\'e8tres sont directement accessibles dans le script, on aura donc quelquechose du genre :\par
+\ul Dans un plugin : \ulnone\par
+$tmp=applique_plugin ($parametres["plugin_pour_faire_tel_truc"], array ("param1"=>"tutu", "param2"=>"toto"));\par
+\ul Dans une page :\ulnone\par
+$tmp=applique_plusgin ($GLOBALS["affiche_page"]["parametres"]plugin_pour_faire_tel_truc"], array ("param1"=>"tutu", "param2"=>"toto"));\par
+\par
+\par
+\ul\b\fs24 III Cr\'e9er un plugin\ulnone\b0\fs20\par
+\par
+\ul\b 1) Cr\'e9er le script\ulnone\b0\par
+\par
+Un plugin est tout d'abord une fonction contenue dans un script. l'emplacement et le nom du script ainsi que le nom de la fonction sont importants et r\'e9gis par des conventions.\par
+\par
+Les plugins sont stock\'e9s dans le r\'e9pertoire include/plugins et dans ses sous-r\'e9pertoires.\par
+\par
+\ul Si un plugin est stock\'e9 dans le r\'e9pertoire include/plugins/a/b/c et s'appelle toto.php \ulnone alors la fonction devra avoir pour nom  \b function\b0  \b plugin_a_b_c_toto ($parametres) \{ \}\b0\par
+\par
+Les param\'e8tres sont toujours fournis au plugin sous la forme d'une unique array.\par
+\par
+Un plugin retourne toujours une array de la forme\par
+$retour["succes"] => 0 ou 1\par
+$retour["erreur"] => message d'erreur \'e9ventuel\par
+$retour["resultat"] => le r\'e9sultat (qui lui-m\'eame est souvent une array)\par
+\par
+\ul\b 2) D\'e9clarer un plugin dans le registre\ulnone\b0\par
+\par
+Il existe plusieurs solutions pour d\'e9clarer le plugin dans le registre. Plugins simples (le plugin est \'e9quivalent au script) ou plugins virtuels (plusieurs plugins utilisent le m\'eame script avec des param\'e8tres diff\'e9rents)\par
+\par
+\ul\i a) Plugin simple\ulnone\i0\par
+\par
+Dans un plugin simple, il y a identit\'e9 entre le plugin et le script contenant la fonction. Par cons\'e9quent, l'arborescence dans le registre correspondra exactement \'e0 l'arborescence des fichiers.\par
+Si le plugin toto.php se trouve dans le r\'e9pertoire a/b/c, alors dans le registre, le plugin sera d\'e9fini dans :\par
+profiles/defaut/plugins/plugins/a/b/c/toto\par
+\par
+Dans ce noeud, on d\'e9clarera simplement un noeud parametres pour sp\'e9cifier les param\'e8tres du plugin.\par
+\par
+\b Si aucun param\'e8tre ne doit \'eatre d\'e9fini au niveau du plugin, on peut m\'eame se dispenser de d\'e9finir le plugin. \b0 Dans le registre. dans ce cas le nom du plugin fourni dans le point d'acc\'e8s (pour la fonction applique_plugin()) correspond \'e0 l'emplacement du fichier plugin.\par
+\par
+\ul\i b) Plugin virtuel\ulnone\i0\par
+\par
+On parle de plugins virtuels quand plusieurs plugins utilisent le m\'eame script (et la m\'eame fonction) mais avec des param\'e8tres diff\'e9rents. Dans ce cas, le nom du plugin (son arborescence dans le registre) ne correspond pas \'e0 l'emplacement du script dans l'arborescence des fichiers.\par
+\par
+Le plugin sera d\'e9fini dans profiles/defaut/plugins/plugins (et ses noeuds enfants)\par
+Par exemple si on d\'e9finit un plugin appel\'e9 "a/b/c/toto"\par
+\par
+il faudra cr\'e9er les noeuds :\par
+profiles/defaut/plugins/plugins/a/b/c/toto/\b chemin_fichier\b0\par
+profiles/defaut/plugins/plugins/a/b/c/toto/\b nom_fonction\b0\par
+profiles/defaut/plugins/plugins/a/b/c/toto/\b parametres\b0\par
+\par
+Le noeud "chemin_fichier" contiendra l'emplacement du script \'e0 partir du r\'e9pertoire include/plugins\par
+Le noeud "nom_fonction" contiendra le nom du script (sans le ".php").\par
+\par
+Par exemple si on a un script "toto.php" qui se trouve dans include/plugins/a/b/c, on aura :\par
+chemin_fichier => a/b/c\par
+nom_fonction => toto\par
+\par
+\ul\b\fs24 IV Passer des param\'e8tres au plugin\ulnone\b0\fs20\par
+\par
+On peut passer des param\'e8tres au plugin \'e0 3 moments diff\'e9rents :\par
+> Dans le script qui appelle le plugin\par
+> Au niveau du point d'acc\'e8s (dans le registre)\par
+> Au niveau du plugin (dans le registre)\par
+\par
+La logique de ces 3 moments est diff\'e9rente.\par
+\par
+On d\'e9finira \b dans le registre au niveau du plugin \b0 les param\'e8tres qui sont propres au plugin. Chaque appel au plugin fera appel \'e0 ces m\'eame param\'e8tres quel que soit le script qui l'appelle. C'est particuli\'e8rement utile dans le cas des plugins virtuels.\par
+\par
+On d\'e9finira \b dans le registre au niveau du point d'acc\'e8s \b0 les param\'e8tres qui sont sp\'e9cifiques \'e0 telle utilisation du plugin, \'e0 un moment donn\'e9.\par
+\par
+On d\'e9finira\b  au niveau du script \b0 les param\'e8tres qui ne peuvent \'eatre d\'e9finis dans le registre, souvent parce qu'ils sont dynamiques (un pointeur vers un fichier, un objet XML...)\par
+\par
+Les param\'e8tres pass\'e9s \'e0 ces 3 moments sont fusionn\'e9s et utilisables dans le plugin via le tableau $parametres. Il est possible de surcharger des param\'e8tres  avec la priorit\'e9 suivante : 1) script 2) point d'acc\'e8s 3) plugin.\par
+\par
+Par exemple si on a d\'e9fini le param\'e8tre toto = 1 dans le point d'acc\'e8s et toto = 2 dans le plugin, alors $parametres["toto"] vaudra 1 dans le plugin.\par
+\par
+\ul\b\fs24 V D\'e9finir des param\'e8tres dans le point d'acc\'e8s ou cr\'e9er un plugin virtuel ?\ulnone\b0\fs20\par
+\par
+Pratiquement cela revient au m\'eame d'avoir un seul plugin et de fournir des param\'e8tres diff\'e9rents au niveau du point d'acc\'e8s ou de cr\'e9er plusieurs plugins virtuels avec des param\'e8tres diff\'e9rents et de les appeler sans fournir de param\'e8tres.\par
+\par
+En r\'e9alit\'e9, cela d\'e9pendra de la r\'e9ponse \'e0 la question suivante : "Suis-je amen\'e9 \'e0 utiliser plusieurs fois un m\'eame plugin avec les m\'eames param\'e8tres ?" Si la r\'e9ponse est oui, il vaut mieux cr\'e9er un plugin virtuel. Cela \'e9vitera d'avoir \'e0 r\'e9p\'e9ter plusieurs fois les m\'eames param\'e8tres au niveau des points d'acc\'e8s. Et surtout, en cas de modification, on n'aura \'e0 le faire qu'une fois.\par
+\par
+En revanche, si on n'utilise qu'une seule fois un plugin avec certains param\'e8tres, on peut d\'e9finir ces derniers au niveau du point d'acc\'e8s et ne conserver qu'un seul plugin.\par
+\par
+\ul\b\fs24 VI Int\'e9grer les r\'e9sultats d'un plugin dans les param\'e8tres\ulnone\b0\fs20\par
+\par
+Parfois, il peut \'eatre int\'e9ressant de faire figurer, dans les param\'e8tres d'un plugin, le r\'e9sultat d'un autre plugin.\par
+\par
+Pour cela, on peut utiliser dans le plugin la fonction plugins_2_param ($tableau, $parametres) \{\}.\par
+\par
+Par exemple, on a dans le registre les param\'e8tres d'un plugin :\par
+[intitule]=>toto\par
+[valeur]=>tutu\par
+[!!liste_champs]=>[nom_plugin]=>aa/bb/cc, [parametres]=>???\par
+\par
+Si dans le plugin on $parametres = appelle plugins_2_param ($parametres, array());\par
+\par
+on obtiendra $parametres = \par
+[intitule]=>toto\par
+[valeur]=>tutu\par
+[liste_champs]=> XXXX (ce que retourne le plugin aa/bb/cc) \par
+\par
+Pour cela, il faut pr\'e9fixer le noeud du registre par "!!"\par
+}
+ 

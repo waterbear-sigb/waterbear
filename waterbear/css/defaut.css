@@ -1,0 +1,291 @@
+/************************************************************************************************************/
+/* Style Général */
+
+a {color: #5B1B1B; text-decoration: none; font-style: italic;}
+* {font-family: sans-serif;}
+
+input[readonly]
+{
+    background-color:silver;
+}
+
+/************************************************************************************************************/
+/* Style des squelettes */
+div.squelette {position:absolute;}
+
+/************************************************************************************************************/
+/* Barres d'icones et menus */
+div.barre_icone {position:fixed; background: url(../js/yui/assets/skins/sam/sprite.png) repeat-x 0 0; border: solid 1px #808080; height:33px;}
+/**td.barre_icone_icone:hover {background: url(../js/yui/assets/skins/sam/sprite.png) repeat-x 0 -1700px;}**/
+
+#barre_menus1_div, #barre_menus2_div {
+    position: fixed;
+    z-index: 10;
+    }
+
+div.barre_icone img:hover {
+    opacity : 0.5;
+}
+
+#barre_menus0_div {
+     top:0 ; 
+     left:0 ; 
+     width:4% ; 
+     height:24px;
+     border:0 ;
+}
+
+#barre_menus1_div {
+    top:0 ; 
+    left:4% ; 
+    width:40% ; 
+    height:24px ; 
+    border:0 ;
+}
+
+#barre_menus2_div {
+    top:0 ; 
+    left:43% ; 
+    width:57% ; 
+    height:24px ;
+    border:0 ;
+}
+
+#barre_icone1_div {
+    top:25px ;
+    left:0 ; 
+    width:44% ; 
+    
+}
+
+#barre_icone2_div {
+     top:25px ; 
+     left:43% ; 
+     width:57% ; 
+}
+
+
+
+/************************************************************************************************************/
+/* Recherche rapide */
+
+#champ_recherche_rapide {
+    width: 200px;
+    height: 18px;
+    margin-top: 2px;
+    margin-right: 20px;
+}
+
+#champ_recherche_rapide.champ_recherche_rapide_blur {
+    color: silver;
+    font-style: italic;
+    font-size: 10px;
+}
+
+#champ_recherche_rapide.champ_recherche_rapide_focus {
+    color: black;
+    font-style: normal;
+    font-size: 10px;
+}
+
+/************************************************************************************************************/
+/* LABELS */
+/* label1 */
+
+
+/************************************************************************************************************/
+/* TITRES */
+*.titre5 {font-size:20px ; text-align:left;}
+*.titre4 {font-size:18px ; text-align:left;}
+
+/************************************************************************************************************/
+/* Textes cliquables */
+span.objet_cliquable {
+    font-weight: bold; 
+    color: #233285;
+    cursor: pointer;
+    }
+
+/************************************************************************************************************/
+/* Barre latérale */
+
+td.barre_acces_bouton_vide_cote {width: 10%; }
+
+td.barre_acces_bouton_vide_separation { height : 5px ; }
+
+td.barre_acces_bouton {width: 80%; background: url(../js/yui/assets/skins/sam/sprite.png) repeat-x 0 0 ; height:  30px; text-align: center; font-weight: bold;}
+td.barre_acces_bouton:hover {background: url(../js/yui/assets/skins/sam/sprite.png) repeat-x 0 -1700px;}
+a.barre_acces_bouton {text-decoration: none; color: #2E2626;}
+
+table.barre_acces_bouton {width: 99%; padding: 0px; }
+
+
+
+table.barre_acces_system {  width: 99%; }
+td.barre_acces_system_vide {background-color: transparent; width: 1%; height:  30px ; }
+td.barre_acces_system_clef { width: 29%; background: url(../js/yui/assets/skins/sam/sprite.png) repeat-x 0 0 ; height:  30px ; font-weight: bold; border: transparent; border-width: 35px;}
+td.barre_acces_system_valeur { width: 68%; background: url(../js/yui/assets/skins/sam/sprite.png) repeat-x 0 0 ; height:  30px ; }
+
+#div_barre_laterale_ouverte {
+    position:fixed; top:59px ; left:0 ; width:20% ; height:90% ; border-right-width:1px ; border-right-style:solid ; border-right-color: gray;
+}
+
+#div_barre_laterale_fermee {
+    position:fixed; top:59px ; left:0 ; width:3% ; height:90% ; border-right-width:1px ; border-right-style:solid ; border-right-color:gray ; 
+}
+
+div.fond_icones, td.fond_icones {
+    padding: 5px; 
+    background-color: white;
+}
+
+/************************************************************************************************************/
+/* Zone MAIN */
+
+div.div_main {
+    position: fixed ; top:59px ; left:20% ; width:79% ; height:90% ; margin: 10px; overflow: scroll;
+}
+
+div.div_main_extended {
+    position: fixed ; top:59px ; left:3% ; width:96% ; height:90% ; margin: 10px; overflow: scroll;
+}
+
+/************************************************************************************************************/
+/* Schedule */
+img.img_schedule_on {
+    border-style: solid;
+    border-width: 2px;
+    border-color: red;
+}
+
+
+/************************************************************************************************************/
+/* Pages d'accueil */
+/**
+table.accueil_table {
+    width: 95%;    
+}
+
+td.accueil_col_sep {
+    width: 2%;
+}
+
+td.accueil_col_case {
+    width: 47%;
+}
+
+td.accueil_ligne_sep {
+    height: 10px;
+}
+
+td.accueil_ligne_case {
+    height: 200px;
+}
+
+div.accueil_case {
+    
+    height: 100%; 
+    width: 100%;   
+    border-color: #5B1B1B;
+    border-width: 2px;
+    border-style: solid;
+    overflow: hidden;
+}
+
+
+
+#accueil_case_pret {
+    background-image: url(../IMG/artistik/anka14.jpg);
+    background-repeat: no-repeat;
+    width: 250px;
+    
+}
+
+#accueil_case_catalogage {
+    background-image: url(../IMG/artistik/anka13.jpg);
+    background-repeat: no-repeat;
+    width: 250px;
+}
+
+#accueil_case_recherche {
+    background-image: url(../IMG/artistik/anka7.jpg);
+    background-repeat: no-repeat;
+    opacity: 0.6;
+    width: 250px;
+}
+
+#accueil_case_revues {
+    background-image: url(../IMG/artistik/anka9.jpg);
+    background-repeat: no-repeat;
+    opacity: 0.6;
+    width: 250px;
+}
+
+#accueil_case_traitements {
+    background-image: url(../IMG/artistik/anka10.jpg);
+    background-repeat: no-repeat;
+    opacity: 0.6;
+    width: 250px;
+}
+
+#accueil_case_avance {
+    background-image: url(../IMG/artistik/anka6.jpg);
+    background-repeat: no-repeat;
+    opacity: 0.6;
+    width: 250px;
+}
+
+
+
+td.accueil_contenu {
+    padding: 10px;
+}
+**/
+
+/************************************************************************************************************/
+/* Pages d'accueil  2*/
+
+.accueil2.arrondi {
+    border-radius:10px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #000000;
+}
+
+.accueil2.transparent {
+    background-color: #edf5ff;   
+    opacity: 0.93;
+}
+
+p.accueil_titre_1 {
+    /**font-family: fantasy;**/
+    
+    
+    
+    
+
+}
+
+p.accueil_titre_1 a {
+    color: #252525;
+    font-style: normal;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+
+a.accueil_titre_2 {
+    /**font-family: fantasy;**/
+    font-size: 15px;
+    font-weight: bold;
+    font-style: normal;
+    color: #252525;
+}
+
+a.accueil_titre_2:hover {
+    color: #AD0D0D;
+}
+
+p.accueil_titre_1 a:hover {
+    color: #AD0D0D;
+}

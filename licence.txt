@@ -1,0 +1,3 @@
+Waterbear est distribué sous licence GPL
+
+Détail de la licence ici : http://www.gnu.org/licenses/gpl-3.0.txt

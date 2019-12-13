@@ -1,0 +1,8 @@
+<?php
+
+print($log);
+
+
+?>
+
+FIN

@@ -1,0 +1,22 @@
+.totaux_table {
+    border-width: 1px;
+    border-style: solid;
+    border-collapse: collapse;
+}
+
+.totaux_col_titre {
+    border-width: 1px;
+    border-style: solid;
+    background-color: gray;
+}
+
+.totaux_raw_titre {
+    border-width: 1px;
+    border-style: solid;
+    background-color: gray;
+}
+
+.totaux_cellule {
+    border-width: 1px;
+    border-style: solid;
+}

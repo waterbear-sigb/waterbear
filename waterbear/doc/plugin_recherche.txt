@@ -1,0 +1,135 @@
+Paramètres du plugin de recherche
+
+catalogue/recherches/recherche_simple
+[param_recherche]
+	[type_objet] => type d'objet à rechercher
+	[criteres][0,1,2...] => cf plus bas
+	[tris][0,1,2...] => les colonnes à utiliser pour trier
+	[page] => page à afficher
+	[nb_notices_par page] 
+	[format_resultat] => str_sql : la requete SQL | donnees : une array des résultat (en tableau) contenant ou non la notice xml | formate : tableau ou 			     chaine formatés | liste : ID séparées par des virgules : utilisable dans une requête de type jointure
+	[bool_parse_contenu] => est-ce qu'on parse la notice pour en faire un objet DOMXML (qui sera ajouté dans la colonne xml)
+	[plugin_formate_notice] => plugin à utiliser pour formater chaque notice (si format_resultat == formate)
+                             passe en paramètre la ligne (toutes les colonnes + éventuellement la notice xml) dans le paramètre [ligne]
+                             récupère directement [resultat]
+			     [ligne] => /
+	[plugin_formate_liste] =>  plugin à utiliser pour formater la liste (si format_resultat == formate)
+                             si non fourni, on retourne une array
+                             passe en paramètre le tableau des notices sous [tableau]
+                             recupère directement [resultat] 
+			     [tableau] => /
+
+=====================
+
+Retour :
+
+[nb_pages]
+[nb_notices]
+[notices] => variable selon les formats choisis : une chaine sql, un tableau, un chaine de carcatères...
+[somme] => la somme d'une colonne (option)
+
+
+============================================================================================
+
+Paramètre [criteres][0,1,2,3...]
+	[booleen] (AND, OR...)
+	[type_recherche] (str_commence, str_contient...) : cf plus bas
+	[intitule_critere] (a_titre, a_auteur...)
+	[valeur_critere] (la chaine à rechercher)
+	[plugin_formate_critere] (un plugin pour formater le critère par ex. transformer "an" en "2013") : signature du plugin : [chaine] => [chaine]
+
+============================================================================================
+
+Types de recherche
+
+// les types suivants ne placent pas de guillemets autour de la chaine à rechercher
+int_egal
+est_parmi_int => in() sans guillemets
+
+// les types suivants placent des guillemets autour de lachaine à rechercher
+str_egal 
+inf
+inf_egal 
+sup 
+sup_egal 
+is_null => la recherche sera lancée même si aucun terme n'est saisi
+is_not_null => la recherche sera lancée même si aucun terme n'est saisi
+non_egal
+
+// fulltext
+str_commence => troncature à droite
+str_contient => contient un mot (forme exacte)
+str_contient_commence => contient un mot (qui commence par)
+str_contient_last_commence => contient les mots avec forme exacte sauf pour dernier mot saisi (commence)
+
+// dates spéciales
+annee => année égal
+annee_inf_egal
+annee_sup_egal
+mois => mois de l'année (de 1 à 12)
+jour => jour de la semaine de 1=dimanche à 7=samedi
+
+// spécial (cf plus bas)
+panier
+panier_lien
+jointure
+
+============================================================================================
+
+Formatage des dates
+
+plugin [chaine] div/util_dates_var [chaine]
+
+an, an1, an2, an3... ====> 2013, 2012, 2011, 2010...
+date, date1, date2, date3... ====> 2013-08-15, 2013-08-14, 2013-08-13, 2013-08-12 ...
+date_an, date_an1, date_an2, date_an3... => 2013-08-15, 2012-08-15, 2011-08-15, 2010-08-15...
+
+============================================================================================
+
+Recherche d'un Panier
+
+[valeur_critere] => chemin du panier
+[intitule_critere] => ID
+
+============================================================================================
+
+Recherche d'un Panier de lien
+
+[valeur_critere] =>chemin du panier
+[intitule_critere] => ID
+[type_obj_lien] => type d'objet lié
+[type_lien] => **opt** spécifier le type de lien entre les 2 objets : par exemple pour un objet auteur lié à un objet biblio on pourra spécifier 701, 702 ...
+[sens_lien] => implicite ou explicite
+
+============================================================================================
+
+Jointure
+
+[type_obj_lien] => type d'objet lié
+[type_lien] => **opt** spécifier le type de lien entre les 2 objets : par exemple pour un objet auteur lié à un objet biblio on pourra spécifier 701, 702 ...
+[sens_lien] => implicite ou explicite
+[intitule_critere] => ID
+[valeur_critere] => la recherche à effectuer (même contenu que param_recherche)
+
+ATTENION le format_resultat de la sous-requête doit être "liste" (liste d'ID séparés par des virgules réutilisable dans une sub-query
+
+exemple (on montre ici le contenu d'un des critères de recherche qui est de type jointure) :
+
++ booleen => AND
++ intitule_critere => ID
++ sens_lien => explicite
++ type_lien => 461
++ type_obj_lien => biblio
++ type_recherche => jointure
++ valeur_critere =>
+     + bool_parse_contenu => 0
+     + criteres
+          + 01
+               + ##valeur_critere => ID_periodique
+               + intitule_critere => ID
+               + type_recherche => int_egal
+     + format_resultat => liste
+     + type_objet => biblio
+
+
+

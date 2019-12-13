@@ -1,0 +1,275 @@
+{\rtf1\ansi\ansicpg1252\deff0\deflang1036{\fonttbl{\f0\fswiss\fcharset0 Arial;}}
+{\*\generator Msftedit 5.41.15.1503;}\viewkind4\uc1\pard\qc\b\f0\fs28 Formater des documents marcxml\b0\fs20\par
+\pard\par
+\par
+\ul\b\fs24 1) Localisation des plugins dans les rubriques\ulnone\b0\fs20\par
+\par
+Les plugins pour le formatage des notices marcxml sont localis\'e9s dans le registre dans \b plugins/catalogue/marcxml/formatage/\i nom_de_l_objet\b0\i0\par
+\par
+Le formatage est utilis\'e9 dans plusieurs cas :\par
+\par
+> G\'e9n\'e9rer les acc\'e8s\par
+> G\'e9n\'e9rer les tris\par
+> G\'e9n\'e9rer les liens explicites\par
+> Formater les donn\'e9es retourn\'e9es aux champs autocomplete\par
+> Formater des notices et des listes de notices pour affichage.\par
+\par
+\ul\b a. g\'e9n\'e9rer les acc\'e8s et les tris\ulnone\b0\par
+\par
+On utilise un plugin (g\'e9n\'e9ralement "formate_plugins") par acc\'e8s.\par
+Puis dans le sous-r\'e9pertoire "main" on cr\'e9era des plugins correspondant \'e0 des regroupements d'acc\'e8s.\par
+Par exemple, on aura le plugin "defaut" utilis\'e9 la plupart du temps :\par
++ chemin_fichier => catalogue/marcxml\par
++ nom_fonction => formate_plugins_array\par
++ parametres\par
+     + plugins\par
+          + a_auteurs =>\par
+               + nom_plugin => catalogue/marcxml/formatage/biblio/acces/auteurs\par
+          + a_titres\par
+               + nom_plugin => catalogue/marcxml/formatage/biblio/acces/titre\par
+          + a_tousmots\par
+               + nom_plugin => catalogue/marcxml/formatage/biblio/acces/tousmots\par
+\par
+\ul\b b. g\'e9n\'e9rer les liens explicites\ulnone\b0\par
+\par
+G\'e9n\'e8re une chaine de caract\'e8res de la forme a:toto|b:tutu qui indique comment g\'e9n\'e9rer un champ de lien\par
+Par exemple, dans "auteur/liens_explicites", pour g\'e9n\'e9rer le champ de lien 700 des notices biblio, on cr\'e9e "biblio_700":\par
+\par
++ chemin_fichier => catalogue/marcxml\par
++ nom_fonction => get_datafields\par
++ parametres\par
+     + champs\par
+          + 01 - 200\par
+               + sous-champs\par
+                    + 01 - a nom\par
+                         + apres => |\par
+                         + avant => a:\par
+                         + code => a\par
+                    + 02 - b pr\'e9nom\par
+                         + apres => |\par
+                         + avant => b:\par
+                         + code => b\par
+               + tag => 200\par
+\par
+\ul\b c. formater les donn\'e9es retourn\'e9es aux champs autocomplete\ulnone\b0\par
+\par
+voir la note sur les champs autocomplete\par
+\par
+\par
+\ul\b d. formater des notices et des listes de notices pour affichage\ulnone\b0\par
+\par
+Plusieurs r\'e9pertoires sont concern\'e9s :\par
+> notice : les plugins servant \'e0 g\'e9n\'e9rer un affichage de notice. P-\'ea de type isbd, tableau, public...\par
+> elem_notice : des plugins pour g\'e9n\'e9rer des blocs de la notice (qui seront assembl\'e9s dans les plugins de notice)\par
+> liste : pour les liste de notices : formate la liste met des \'e9l\'e9ments entre les notices et aussi avant et apr\'e8s la liste\par
+> formats_liste : D\'e9finit un format, en associant un plugin de formatage de notice, un plugin de formatage de liste (optionnel) et un intitul\'e9.\par
+> listes_format_notices : des listes de formats de notices\par
+> listes_formats_listes : des listes de formats de listes\par
+\par
+\par
+\ul\b\fs24 2) Utilisation des plugins\ulnone\b0\fs20\par
+\par
+\ul\b get_datafields_node_list\ulnone\b0\par
+\par
+/**\par
+ * plugin_catalogue_marcxml_get_datafields_nodelist()\par
+ * \par
+ * \par
+ * Ce plugin retourne un tableau (!! PAS un nodelist) de tous les champs (DomNode) d'une notice pr\'e9sentant certains crit\'e8res :\par
+ * le nom du champ (200, 700, 464...)\par
+ * la pr\'e9sence de certains sous-champs ($a, $b...)\par
+ * La valeur des sous-champs\par
+ * la position du champ ou du ss-champ dans la liste\par
+ * NOTE : c'est une disjonction. Il suffit que la condition soit remplie pour UN sous sous-champ, et le champ sera valid\'e9 // p-\'ea \'e0 modifier plus tard\par
+ * La notice peut \'eatre fournie soit sous forme d'objet DomXml soit directement tvs_marcxml\par
+ * \par
+ * @param array $parametres\par
+ * \par
+ * @param ["notice"] => notice en marcxml. (inutile si objet tvs_marcxml fourni)\par
+ * @param ["tvs_marcxml"] => objet tvs_marcxml. Si non fourni, g\'e9n\'e9r\'e9 \'e0 partir de la notice (DomXml)\par
+ * \par
+ * @param ["champs"] => liste des champs \'e0 extraire\par
+ * @param ["champs"][XXX]["tag"]=> 1 des champs\par
+ * @param ["champs"][XXX]["idx"]=> position si plusieurs champs identiques : \'e0 partir de 1 ou "last()" pour le dernier\par
+ * @param ["champs"][XXX]["plugin_formate"]=> Un plugin pour formater le champ. Le texte sera envoy\'e9 dans l'attribut [texte] et r\'e9cup\'e9r\'e9 \'e9galement dans [texte]\par
+ * @param ["champs"][XXX]["sous-champs"]=> sous-champs devant \'eatre pr\'e9sents pour extraire ce champ\par
+ * @param ["champs"][XXX]["sous-champs"][YYY]["code"]=> 1 des sous-champs\par
+ * @param ["champs"][XXX]["sous-champs"][YYY]["valeur"]=> valeur que doit prendre le sous-champ. Si vide, on acc\'e8de n'importe quelle valeur du moement que le ss-champ est pr\'e9sent\par
+ * @param ["champs"][XXX]["sous-champs"][YYY]["idx"]=> position si plusieurs ss-champs identiques : \'e0 partir de 1 ou "last()" pour le dernier\par
+ * @param ["champs"][XXX]["sous-champs"][YYY]["plugin_formate"]=> Un plugin pour formater le ss-champ. Le texte sera envoy\'e9 dans l'attribut [texte] et r\'e9cup\'e9r\'e9 \'e9galement dans [texte]\par
+ * \par
+ * @return $retour => liste (array) des champs (array)\par
+ */\par
+\par
+\par
+\ul\b get_datafields\ulnone\b0\par
+\par
+/**\par
+ * plugin_catalogue_marcxml_get_datafields()\par
+ * \par
+ * Ce plugin retourne des champs et sous-champs format\'e9s sous forme de string.\par
+ * Le formatage (champs/sous champs \'e0 r\'e9cup\'e9rer et la ponctuation, s\'e9parateurs...) est indiqu\'e9 dans l'attribut [champs]\par
+ * La notice peut \'eatre fournie soit sous forme d'objet DomXml soit directement tvs_marcxml\par
+ * \par
+ * @param array $parametres\par
+ * \par
+ * @param ["notice"] => notice en marcxml. (inutile si objet tvs_marcxml fourni)\par
+ * @param ["tvs_marcxml"] => objet tvs_marcxml. Si non fourni, g\'e9n\'e9r\'e9 \'e0 partir de la notice (DomXml)\par
+ * \par
+ * @param ["champs"] => liste des champs \'e0 extraire\par
+ * @param ["champs"][XXX]["tag"]=> 1 des champs\par
+ * @param ["champs"][XXX]["idx"]=> position du champ dans la liste ou last()\par
+ * @param ["champs"][XXX][avant|avant_verif|apres|plugin_formate] => chaines de caract\'e8res \'e0 placer avant, avant (si d\'e9j\'e0 qqchse avant) ou apr\'e8s le contenu du champ\par
+ * @param ["champs"][XXX]["sous-champs"]=> sous-champs \'e0 extraire pour ce champ\par
+ * @param ["champs"][XXX]["sous-champs"][YYY]["code"]=> 1 des sous-champs\par
+ * @param ["champs"][XXX]["sous-champs"][YYY]["idx"]=> position du ss-champ dans la liste ou last()\par
+ * @param ["champs"][XXX]["sous-champs"][YYY]["valeur"]=> Valeur requise pour un sous-champ\par
+ * @param ["champs"][XXX]["sous-champs"][YYY][avant|avant_verif|apres|plugin_formate] => chaines de caract\'e8res \'e0 placer avant, avant (si d\'e9j\'e0 qqchse avant) ou apr\'e8s le contenu du ss-champ\par
+ *\par
+ * @return $retour["resultat"]["texte"] => texte trouv\'e9\par
+ */\par
+\par
+\ul\b get_datafields_array\ulnone\b0\par
+\par
+/**\par
+ * plugin_catalogue_marcxml_get_datafields_array()\par
+ * \par
+ * Ce plugin retourne une liste de champs (datafields) comme get_data_fields, mais il le fait sous forme de tableau :\par
+ * exemple :\par
+ * [600]\par
+ *     [0] => "toto : tutu : titi"\par
+ *     [1] => "popo : pupu : pipi"\par
+ * [606]\par
+ *     [0] => ...\par
+ * \par
+ * @param array $parametres\par
+ * @param ["notice"] => notice en marcxml\par
+ * @param ["tvs_marcxml"] => objet tvs_marcxml. Si non fourni, g\'e9n\'e9r\'e9 \'e0 partir de la notice (DomXml)\par
+ * \par
+ * @param ["champs"] => liste des champs \'e0 extraire\par
+ * @param ["champs"][XXX]["tag"]=> 1 des champs\par
+ * @param ["champs"][XXX]["idx"]=> position si plusieurs champs identiques : \'e0 partir de 1 ou "last()" pour le dernier\par
+ * @param ["champs"][XXX][avant|avant_verif|apres] => chaines de caract\'e8res \'e0 placer avant, avant (si d\'e9j\'e0 qqchse avant) ou apr\'e8s le contenu du champ\par
+ * @param ["champs"][XXX]["sous-champs"]=> sous-champs \'e0 extraire pour ce champ\par
+ * @param ["champs"][XXX]["sous-champs"][YYY]["code"]=> 1 des sous-champs\par
+ * @param ["champs"][XXX]["sous-champs"][YYY]["idx"]=> position du ss-champ dans la liste ou last()\par
+ * @param ["champs"][XXX]["sous-champs"][YYY]["valeur"]=> Valeur requise pour un sous-champ\par
+ * @param ["champs"][XXX]["sous-champs"][YYY][avant|avant_verif|apres] => chaines de caract\'e8res \'e0 placer avant, avant (si d\'e9j\'e0 qqchse avant) ou apr\'e8s le contenu du ss-champ\par
+ * @param ["champs"][XXX]["sous-champs"][YYY]["plugin_formate"]=> Un plugin pour formater le ss-champ. Le texte sera envoy\'e9 dans l'attribut [texte] et r\'e9cup\'e9r\'e9 \'e9galement dans [texte]\par
+ * \par
+ * @return $retour["resultat"]["texte"] => texte trouv\'e9\par
+ */\par
+\par
+\ul\b formate_plugins\ulnone\b0\par
+\par
+/**\par
+ * plugin_catalogue_marcxml_formate_plugins()\par
+ * \par
+ * Ce plugin permet de formater une liste de plugins\par
+ * \par
+ * Il appelle successicement les plugins comme ceci :\par
+ * [notice]<=([notice])\par
+ * \par
+ * ATTENTION : \'e0 la base ce plugin fonctionnait avec les plugin "get_datafields_xxx" qui attendaient le param\'e8tre en [notice] et retournaient le r\'e9sultat en [notice]\par
+ * Mais il peut aussi fonctionner avec d'autres plugins qui ont une autre signature. Dans ce cas, il faut utiliser des alias\par
+ * \par
+ * \par
+ * @param mixed $parametres\par
+ * @param["notice"] => notice XML de base (\'e0 passer \'e0 tous les autres plugins)\par
+ * @param["plugins"][0,1,2...][nom_plugin]\par
+ *                            [parametres] // parametres du plugin\par
+ *                            [avant]\par
+ *                            [apres]\par
+ *                            [avant_verif]\par
+ * \par
+ * pour chaque plugin :\par
+ *      $tmp[texte] = plugin([notice])\par
+ * \par
+ * @return [texte] => le texte format\'e9\par
+ */\par
+\par
+\ul\b formate_plugins_array\ulnone\b0\par
+\par
+/**\par
+ * plugin_catalogue_marcxml_formate_plugins_array()\par
+ *  \par
+ * Ce plugin retourne un tableau associatif, chaque \'e9l\'e9ment du tableau \'e9tant g\'e9n\'e9r\'e9 par un autre plugin\par
+ * Il appelle successicement les plugins comme ceci :\par
+ * [notice]<=([notice])\par
+ * \par
+ * ATTENTION : \'e0 la base ce plugin fonctionnait avec les plugin "get_datafields_xxx" qui attendaient le param\'e8tre en [notice] et retournaient le r\'e9sultat en [notice]\par
+ * Mais il peut aussi fonctionner avec d'autres plugins qui ont une autre signature. Dans ce cas, il faut utiliser des alias\par
+ * \par
+ * @param mixed $parametres\par
+ * @param [notice]\par
+ * @param [plugins]\par
+ * @param       [toto] => [nom_plugin]\par
+ * @param                 [parametres]   \par
+ * @param [force_retour] : si 1, on retourne qqchse, m\'eame si 1 ou plusieurs plugins ont retourn\'e9 des erreurs. Sinon, on propage l'erreur\par
+ * \par
+ * @return array => retourne directement le tableau \'e0 la racine\par
+ */\par
+\par
+\ul\b formate_array\ulnone\b0\par
+\par
+/**\par
+ * plugin_catalogue_marcxml_formate_array()\par
+ * \par
+ * Formate une array. retourne une chaine de caract\'e8res\par
+ * \par
+ * @param mixed $parametres\par
+ * @param [avant]\par
+ * @param [apres]\par
+ * @param [avant_element]\par
+ * @param [avant_element_verif]\par
+ * @param [apres_element]\par
+ * @param [tableau] => l'array \'e0 formater\par
+ * \par
+ * @return [texte] => chaine format\'e9e\par
+ */\par
+\par
+\ul\b get_colonnes\ulnone\b0\par
+\par
+/**\par
+ * plugin_catalogue_marcxml_get_colonnes()\par
+ * \par
+ * Ce plugin permet de mettre en forme des informations fournies sous forme de tableau. Il est typiquement utilis\'e9 pour\par
+ * mettre en forme des infos extraites d'une base de donn\'e9es (ligne de r\'e9sultat) en particulier les tables obj_xxx_acces\par
+ * \par
+ * @param array $parametres\par
+ * @param [tableau] => le tableau contenant les colonnes \'e0 formater\par
+ * @param [colonnes][0,1,2...][nom_colonne | avant | apres | avant_verif] => infos contenant le formatage\par
+ * \par
+ * \par
+ * @return [texte] => le texte format\'e9\par
+ */\par
+\par
+\ul\b get_colonnes_array\ulnone\b0\par
+\par
+/**\par
+ * plugin_catalogue_marcxml_get_colonnes_array()\par
+ * \par
+ * Comme get_colonnes, mais retourne le r\'e9sultat sous forme d'array.\par
+ * Fait correspondre la colonne [nom_colonne] au champ [nom_champ] du tableau\par
+ * \par
+ * @param array $parametres\par
+ * @param [tableau] => le tableau contenant les colonnes \'e0 formater\par
+ * @param [colonnes][0,1,2...][nom_colonne | nom_champ | avant | apres ] => infos contenant le formatage\par
+ * \par
+ * \par
+ * @return [texte] => ATTENTION : un tableau\par
+ */\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+}
+ 

@@ -1,0 +1,132 @@
+
+
+ 
+ /***********************************/
+ /* CHAMPS !!!!!!!!!!!!!!!!!!!!!!!! */
+
+/* Espacement entre les champs */ 
+ .tvs_formulator_conteneur_champ {
+    padding : 15px;
+    display: inline;
+ }
+ 
+ .tvs_formulator_conteneur_champ_hidden {
+    padding : 0px;
+    display: none;
+ }
+ 
+ /* MENU des champs */
+ /* attributs role : cellule_icone, image_icone, table_menu, cellule_titre, cellule_toutes_icones */
+ .tvs_formulator_champ_menu {
+    position: relative;
+    padding: 1px;
+ }
+  
+ /*  Le motif de fond du menu des champs*/
+ div.tvs_formulator_champ_menu {
+    background:url("../js/yui/assets/skins/sam/sprite.png") repeat-x scroll 0 0 ;
+ }
+ 
+ /* Taille du titre et des icones */
+ .tvs_formulator_champ_menu[role="table_menu"] {
+    width:  100%;
+ }
+ 
+ .tvs_formulator_champ_menu[role="cellule_toutes_icones"] {
+    width:  15%;
+ }
+ 
+ .tvs_formulator_champ_menu[role="cellule_titre"] {
+    width:  85%;
+ }
+ .tvs_formulator_champ_menu[role="cellule_icone"] {
+    width:  15px;
+ }
+ 
+/* Animation quand survol des icones */
+ .tvs_formulator_champ_menu[role="image_icone"]:hover {
+    /**background:url("js/yui/assets/skins/sam/sprite.png") repeat-x scroll 0 -1700px ;**/
+    opacity : 0.5;
+    filter : alpha(opacity=50); 
+ }
+ 
+ /* CONTENU des champs */
+ .tvs_formulator_champ_conteneur_elements {
+    position: relative;
+    border-style: dashed;
+    border-width: 1px;
+    border-color: blue;
+    padding: 5px;
+ }
+ 
+ 
+/***********************************/
+/* SOUS-CHAMPS !!!!!!!!!!!!!!!!!!!!!!!! */
+ .tvs_formulator_ss_champ {
+    position: relative;
+    margin: 0px;
+    padding: 0px;
+    width:  95%;
+ }
+
+/***********************************/
+/* ONGLETS !!!!!!!!!!!!!!!!!!!!!!!! */ 
+ .tvs_formulator_onglet_conteneur_elements {
+    width : 100%;
+    padding: 5px;
+ }
+ 
+ /***********************************/
+ /***********************************/
+/* ELEMENTS DEFAUT !!!!!!!!!!!!!!!!!!!!!!!! */ 
+/* table_generale, cellule_nom, cellule_description, cellule_icone, image_icone, cellule_input, input, cellule_toutes_icones, tableau_icones */
+.tvs_formulator_elements_defaut[role="table_generale"] {
+    width : 100%;
+}
+
+.tvs_formulator_elements_defaut[role="cellule_nom"] {
+    width : 5%;
+    font-weight: bold;
+}
+
+.tvs_formulator_elements_defaut[role="cellule_description"] {
+    width : 20%;
+
+}
+
+.tvs_formulator_elements_defaut[role="cellule_input"] {
+    width : 60%;
+}
+
+.tvs_formulator_elements_defaut[role="cellule_toutes_icones"] {
+    width : 15%;
+}
+
+.tvs_formulator_elements_defaut[role="input"] {
+    width : 100%;
+}
+
+textarea.tvs_formulator_elements_defaut[role="input"] {
+    height : 80px;
+}
+
+.tvs_formulator_elements_defaut[role="select"] {
+    width : 100%;
+}
+
+.tvs_formulator_elements_defaut[role="cellule_icone"] {
+    width : 17px;
+}
+
+.tvs_formulator_elements_defaut[role="image_icone"]:hover {
+    opacity : 0.5;
+    filter : alpha(opacity=50); 
+}
+
+ 
+ 
+ 
+ 
+ 
+
+

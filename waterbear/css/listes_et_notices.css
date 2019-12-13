@@ -1,0 +1,48 @@
+/* Tous les noms de classe sont préfixés par "ln" comme listes et notices */ 
+
+/* Tableau de notices */ 
+
+table.ln_liste_defaut {
+    width : 100%;
+}
+
+/* Tableu de notice format public */ 
+
+table.ln_notice_public {
+    width : 100%;
+}
+
+tr.ln_notice_public {
+    
+}
+
+td.ln_notice_public_intitule {
+    width : 15%;
+    min-width: 150px;
+    font-weight: bold;
+    vertical-align: top;
+}
+
+td.ln_notice_public_contenu {
+
+}
+
+/* Tableu d'exemplaires DANS une notice biblio */ 
+
+table.ln_tableau_exemplaires {
+    width : 100%;
+    border-width: 1px;
+    border-style: solid;
+}
+
+td.ln_tableau_exemplaires {
+    
+}
+
+tr.ln_tableau_exemplaires {
+    
+}
+
+td.ln_tableau_exemplaires_intitules {
+    font-weight: bold;
+}

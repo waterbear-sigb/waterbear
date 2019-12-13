@@ -1,0 +1,12 @@
+a {color: #777777; text-decoration: none; font-style: italic;}
+* {font-family: verdana; font-size: 15px;}
+
+td.barre_icone_icone img {
+  height: 20px;
+  width: 20px;
+}
+
+div.barre_icone {
+  height: 50px;
+  /**top: 35px !important;**/
+}

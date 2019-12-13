@@ -1,0 +1,13 @@
+table.formulaire {
+    width: 90%;
+}
+
+td.formulaire_intitule {
+    width: 25%;
+    height: 40px;
+}
+
+td.formulaire_champ {
+    width: 75%;
+    height: 40px;
+}

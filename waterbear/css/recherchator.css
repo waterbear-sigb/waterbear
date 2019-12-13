@@ -1,0 +1,208 @@
+/***********************************/
+/***********************************/
+/* FORMULAIRE RECHERCHE  !!!!!!!!!!!!!!!!!!!!!!!! */ 
+/* */
+.tvs_recherchator[role="table_critere"] {
+    width : 100%;
+}
+
+.tvs_recherchator[role="tr_critere"] {
+
+}
+
+.tvs_recherchator[role="td_booleen"] {
+    width : 7%;
+}
+
+.tvs_recherchator[role="td_intitule"] {
+    width : 15%;
+    font-weight: bold;
+}
+
+.tvs_recherchator[role="td_type"] {
+    width : 15%;
+}
+
+.tvs_recherchator[role="td_champ"] {
+    width : 42%;
+}
+
+.tvs_recherchator[role="td_panier_comptage"] {
+    width : 34%;
+}
+
+.tvs_recherchator[role="td_type_comptage"] {
+    width : 5%;
+}
+
+.tvs_recherchator[role="td_champ_comptage"] {
+    width : 3%;
+}
+
+
+.tvs_recherchator[role="td_icones"] {
+    width : 20%;
+}
+
+.tvs_recherchator[role="select_booleen"] {
+    width : 80%;
+}
+
+.tvs_recherchator[role="select_type"] {
+    width : 80%;
+}
+
+.tvs_recherchator[role="select_type_lien"] {
+    width : 80%;
+}
+
+.tvs_recherchator[role="select_champ"] {
+    width : 100%;
+}
+
+textarea.tvs_recherchator {
+    height : 200px;
+}
+
+
+
+
+
+
+
+/* BARRE LISTE !!!!!!!!!!!!!!!!!!!!!!!! */ 
+div#div_barre_liste_recherchator { /* La barre elle-même */
+    width : 100%;
+    height : 30px;
+    background: url(../js/yui/assets/skins/sam/sprite.png) repeat-x 0 0; border: solid 1px #808080; height:33px;
+}
+
+div#div_barre_liste_statator { /* La barre elle-même */
+    width : 100%;
+    height : 30px;
+    background: url(../js/yui/assets/skins/sam/sprite.png) repeat-x 0 0; border: solid 1px #808080; height:33px;
+}
+
+table#table_barre_liste { /* Le tableau contenant nb pages, pagination, tri, liste */
+    width : 100%;
+}
+
+td#col_nb_notices_liste { /* La cellule contenant le nb pages */
+    width : 15%;
+}
+
+td#col_pagination_liste { /* a cellule contenant la pagination */
+    width : 20%;
+}
+
+/* BARRE RECHERCHE !!!!!!!!!!!!!!!!!!!!!!!! */ 
+div#div_barre_recherche_recherchator { /* La barre elle-même */
+    width : 100%;
+    height : 30px;
+    /* background-color: #D5D1D1; */
+    background: url(../js/yui/assets/skins/sam/sprite.png) repeat-x 0 0; border: solid 1px #808080; height:33px;
+}
+
+div#div_barre_recherche_statator { /* La barre elle-même */
+    width : 100%;
+    height : 30px;
+    /* background-color: #D5D1D1; */
+    background: url(../js/yui/assets/skins/sam/sprite.png) repeat-x 0 0; border: solid 1px #808080; height:33px;
+}
+
+table#table_barre_recherche { /* Le tableau contenant nb pages, pagination, tri, liste */
+    width : 100%;
+}
+
+/* BARRE NOTICE !!!!!!!!!!!!!!!!!!!!!!!! */ 
+div#div_barre_notice_recherchator { /* La barre elle-même */
+    width : 100%;
+    height : 30px;
+   background: url(../js/yui/assets/skins/sam/sprite.png) repeat-x 0 0; border: solid 1px #808080; height:33px;
+}
+
+div#div_barre_notice_statator { /* La barre elle-même */
+    width : 100%;
+    height : 30px;
+   background: url(../js/yui/assets/skins/sam/sprite.png) repeat-x 0 0; border: solid 1px #808080; height:33px;
+}
+
+table#table_barre_notice { /* Le tableau contenant nb pages, pagination, tri, liste */
+    width : 100%;
+}
+
+
+
+td#col_pagination_notice { /* a cellule contenant la pagination */
+    width : 20%;
+}
+
+/* BARRE PANIERS !!!!!!!!!!!!!!!!!!!!!!!! */ 
+div#div_barre_paniers { /* La barre elle-même */
+    width : 100%;
+    height : 30px;
+   background: url(../js/yui/assets/skins/sam/sprite.png) repeat-x 0 0; border: solid 1px #808080; height:33px;
+}
+
+div#div_navigation_paniers { 
+    /**position: absolute; **/
+    top: 10px; 
+    left: 10px; 
+    height: 500px; 
+    width: 400px; 
+    overflow: scroll;
+}
+
+div#div_formulaire_paniers { 
+    /**position: absolute; **/
+    top: 10px; 
+    left: 520px; 
+    height: 500px; 
+    /*width: 400px; */
+    /*overflow: scroll;*/
+}
+
+input#input_nom_panier {
+    width:400px;
+}
+
+input#input_chemin_parent {
+    width:400px;
+}
+
+input#input_panier_en_cours {
+    width:400px;
+    font-weight: bold;
+}
+
+textarea#textarea_description_panier {
+    width:400px;
+    height: 100px;
+}
+
+
+/* icones !!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
+
+a.recherchator_icone {
+    border-width: 0px;
+    border-style: none;
+}
+
+img.recherchator_icone {
+    border-width: 0px;
+    border-style: none;
+}
+
+img.recherchator_icone:hover {
+   opacity : 0.5;
+   filter : alpha(opacity=50); 
+}
+
+td.recherchator_icone {
+    width: 30px;
+}
+
+/* LISTE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
+div#div_tab_liste {
+    width : 100%;
+}

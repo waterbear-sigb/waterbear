@@ -1,0 +1,71 @@
+<?php
+
+// A SUPPRIMER !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+ 
+/**
+ * plugin_catalogue_catalogage_grilles_actions_grilles_wizard_lecteur_date_abonnement()
+ * 
+ * @param mixed $parametres
+ * @param [plugin_infos_abonnement] => plugin pour récupérer les infos d'abonnement
+ * @param [variables] : les variables à modifier, parmi lesquelles :
+ *                  [ss_champ_a] => abonnement
+ *                  [ss_champ_c] => date début
+ *                  [ss_champ_d] => date fin
+ *                  [ID_notice]  => ID de la notice lecteur 
+ * 
+ * 
+ * 
+ * @return [variables]
+ */
+function plugin_catalogue_catalogage_grilles_actions_grilles_wizard_lecteur_date_abonnement ($parametres) {
+    $retour=array();
+    $retour["succes"]=1;
+    $retour["resultat"]=array();
+    
+    $variables=$parametres["variables"];
+    $date_debut=$variables["ss_champ_c"];
+    $date_fin=$variables["ss_champ_d"];
+    $ID_lecteur=$variables["ID_notice"];
+    $abonnement=$variables["ss_champ_a"];
+    
+    // 1) On détermine la date de début    
+    // s'il y a une date de fin et qu'elle n'est pas dépassée, on la prend comme nouvelle base. Sinon, on prend la date du jour
+    $timestamp_fin=date_us_2_timestamp($date_fin);
+    if ($date_fin != "" AND ($timestamp_fin - time()) > 0) {
+        $date_debut = $date_fin;
+    } else {
+        $date_debut=date("Y-m-d");
+    }
+    
+    // 2) On détermine la date de fin
+    $tmp=applique_plugin ($parametres["plugin_infos_abonnement"], array());
+    if ($tmp["succes"] != 1) {
+        return ($tmp);
+    }
+    $infos_abonnement=$tmp["resultat"];
+    $duree=$infos_abonnement[$abonnement]["duree"];
+    if ($duree == "") {
+        $retour["succes"]=0;
+        $retour["erreur"]="@& Aucune duree parametree pour l'abonnement $abonnement";
+        return ($retour);
+    }
+    $time1=date_us_2_timestamp($date_debut);
+    $time2=$time1 + ($duree * 24 * 60 * 60);
+    $date_fin=date("Y-m-d", $time2);
+    
+    $variables["ss_champ_c"]=$date_debut;
+    $variables["ss_champ_d"]=$date_fin;
+    
+    // 3) On crée un objet payement
+    $prix=$infos_abonnement[$abonnement]["prix"];
+    // TODO !!!!
+    
+    
+    
+    
+    $retour["resultat"]["variables"]=$variables;
+    return ($retour);
+}
+
+?>

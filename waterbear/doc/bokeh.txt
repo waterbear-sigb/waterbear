@@ -1,0 +1,139 @@
+
+==================================================================
+******** BUGS ****************************************************
+==================================================================
+
+***************** Bugs divers liés aux chemins / paths... ***
+
+1) /includes.php
+1.a mauvaise gestion de $site (ne marche pas si bokeh est installé directement à la racine)
+l.29 remplacer $site=... (on fait ça en 2 lignes : récupérer ce qu'il y a avant le index.php puis retirer le slash initial
+
+1.b BASE_URL. normalement c'est juste $site préfixé d'un slash. mais si $site=="" alors il faut que BASE_URL=="" aussi (juste un slash ça fait planter) 
+
+2) cosmo/php/_init.php
+2.a : l.62 : on se positionne dans cosmogramme et pas dans opacce (chdir)
+
+2.b : pour déterminer $site si getSite() ne renvoie rien (bokeh installé à la racine), $site="/" sinon, c'est la site encadré par des slashs
+
+2.c BASE_URL. normalement c'est juste $site préfixé d'un slash. mais si $site=="" alors il faut que BASE_URL=="" aussi (juste un slash ça fait planter)
+
+3) cosmo/php/classes/classe_cosmopaths.php
+3.1 : getSite() : ne marchait que si bokeh était installé comme suit : http://xxx.fr/yyy (avec un et un seul rep. après la racine :/
+=> on change l'approche (on utilise la même technique que pour opac)
+
+4) ckeditor/core_five_filemanager/connectors/php/filemanager.php
+Permet au client d'uploader des fichiers sur le serveur (images, bannières...)
+
+4.1 opacTraversalProtect() : cette fonction permet de vérifier que le chemin fourni ne contourne pas la sécurité. Mais il est spécifique au contexte afi (pas plus de 2 sous-répertoires dans le chemin, "userfiles" forcément en 2e position)
+=> désactivé sauf le controle du pas de ".." dans le chemin
+
+5) library/startup.php::loadConfig()
+cette fonction peut être appelée depuis opac ou depuis cosmo ce qui fait que le fichier de config n'est pas trouvé
+du coup, on se base sur $basePath (cosmo) ou $base_path (opac)
+
+***************** UTF8 ***
+
+1) ajouter "header ('Content-type: text/html; charset=UTF-8');"
+au début de index.php et cosmo/php/_init.php
+
+
+***************** DIVERS ***
+
+1) Désactiver l'homogénéisation (fait planter mais j'ai pas identifié pourquoi)
+cosmogramme/php/integre_traite_main.php : commenter toute la partie intégration des notices succintes et homogénéisation
+ATTENTION : mettre un $phase=7 à la fin de la section commentée, sinon le calcul des facettes et le reste ne se fera pas
+
+***************** MAJ ***
+
+1) les scripts de maj sont dans cosmo/sql/patch. Le script 203 ne peut se désouler avant le 225 (colonne is_available de la table exemplaires manque. Il faut donc rajouter manuellement la création de cette colonne au début de la maj 203 et désactiver la maj 225.
+
+NOTE : 
+$_SERVER["SCRIPT_NAME"] : chemin du script depuis la racine du site (ex. /afi/opacce/index.php)
+$base_path : emplacement de la racine du site (chemin absolu sur le serveur en partant de /home) : ex. /home/moccam/ccy2/afi/opacce
+$site : emplacement de la racine du site depuis la racine apache (ex. afi/opacce)
+BASE_URL : idem $site préfixé d'un slash (ex. /afi/opacce)
+ROOT_URL : nom du serveur (ex. http://moccam-en-ligne.fr)
+
+
+
+
+
+==================================================================
+******** MODIFS **************************************************
+==================================================================
+
+1) scripts spécifiques Waterbear
+Toutes les fonctions spécifiques à Waterbear ont été regroupées dans le répertoire library/wb
+-> util.php : les fonctions et les paramètres
+-> session.php: permet de générer le cookie metawb_site en fonction de l'url (mabib.fr/xxx)
+-> des librairies (JSON...)
+-> Les scripts de maj spécifiques : wb_maj_1.php...
+-> le répertoire wb_log pour les logs de debogage
+
+2) Les includes des modifs
+require_once "library/wb/util.php";
+require_once "library/wb/JSON.php";
+require_once "library/wb/session.php";
+
+dans /includes.php (opac)
+et dans cosmo/php/_init.php (cosmogramme) [ATTENTION comme _init.php peut être appelé depuis plusieurs répertoires différents, on ne peut utiliser de chemin relatif. Il faut un chemin absolu obtrenu grace à $basePath]
+
+mais également dans cosmogramme/cosmozend/index.php (en préfixant cette fois-ci les chemins par "../../"
+
+3) Se connecter à la bonne base de données (en f° des infos récupérées en début de script de metawb)
+
+-> pour opac : dans library/startup.php::loadConfig() : quelques lignes juste avant Zend_Registry::set('cfg', $cfg);
+   ATTENTION : pour pouvoir modifier les entrées du fichier de configuration, il faut instancier l'objet Zend_Config_Ini en spécifiant qu'il est modifiable :
+   $cfg = new Zend_Config_Ini($config_init_file_path, $serveur, array('allowModifications'=>true));
+-> Pour cosmogramme : quelques lignes vers la fin de cosmo/php/_init.php (juste avant la connexion à la DB)
+
+4) personnalisation des chemins d'import/export de fichiers (et création des répertoires si nécessaire)
+
+-> Pour opac : dans library/startup.php::loadConfig() : quelques lignes au début de setupConstants()
+-> Pour cosmogramme : cosmo/php/fonctions/variables.php::getVariable()
+
+
+5) Permettre la connexion avec le login superadministrateur metawb
+
+-> pour opac : ???
+-> Pour cosmogramme : quelques lignes vers la fin de cosmo/php/_init.php (juste avant le controle login) 
+
+6) Lancer la maj de la DB AFI lors de la copie initiale de la DB (mot de passe, url du ws...)
+-> cosmo/php/wb_init_db.php (lance une fonction définie dans util.php)
+
+6) Permettre de lancer des opérations sur la base afi via metawb
+-> cosmo/php/wb_operation.php (lance une fonction définie dans util.php)
+
+8) Pour lancer les maj afi
+
+dans cosmo/php/upgrade_db.php, mettre un include(init_frame) pour qu'il se connecte à la bonne db
+NOTE : les scripts de maj sont dans cosmo/sql/patch
+
+9) Pour paramétrer l'affichage de la notice : library/class/codification.php (modifier la constante au début)
+
+10) WS Waterbear : Pour l'instant, pas de création d'un WS spécifique à Waterbear (pas réussi :/ => modif du WS Nanook : library/Class/WebServices/SIGB/Nanook/Service
+on a réécri la méthode BuildQueryURL() pour générer une chaine du type xxx?aaa=bbb&ccc=ddd au lieu d'utiliser l'url rewriting
+
+==================================================================
+******** NOTES SUR LA VERSION 7.2.* ******************************
+==================================================================
+
+J'ai essayé de déployer cette version pour résoudre le bug lié aux facettes des sections qui ne se calculaient pas
+finalement je me suis rendu compte que ça ne résolvait pas le bug (qui était en fait dû au $etape qui n'était pas mis à jour
+dans integre_traite_main). Comme après 2 jours de travail, il restait encore pas mal de problèmes et que le bug était résolu, 
+j'ai renoncé à déployer cette version mais voici quand même quelques notes prises qui pourraient être utiles pour une futre mise à jour.
+
+1. la plupart des bugs liés à l'emplacement du répertoire d'install semblent résolus mais il en reste qqs uns (ben oui ;-)
+-> bug 2.a : changer le chdir dans _init.php
+-> UTF8
+-> Les scripts de MAJ 203 et 225
+-> bug 4.1 : problème pour le gestionnaire d'images... c'est fait différemment d'avant. Il n'y a plus de fonction OpacTraversalProtect() dans fileManager.php, mais il effectue une vérification : il faut commenter une ligne pour la contourner. l.44 : $fm->error()...
+-> dans cosmo/php/_init.php il faut rajouter le rep 'opacce' dans le include_path. ça prend la forme set_include_path(get_include_path().PATH_SEPARATOR.$basePath."/../.."); (en plus du set_include_path() précédent)
+
+-> il faut faire un include des fichiers metawb dans ckeditor/core_five_filemanager/connectors/php/filemanager.php
+sous la forme 'require_once "../../../../library/wb/util.php";' (idem pour les2 autres scripts)
+
+-> Concernant la modification des répertoires d'upload de fichiers dans cosmogramme, il faut le faire maintenant dans
+library/class/cosmovar.php::get()
+Il semblerait que la fonction variables.php::getVariable() ne soit plus utilisée ?? à vérifier. par contre ça buggait et me créait des doublons des répertoires dans les répertoires créés.

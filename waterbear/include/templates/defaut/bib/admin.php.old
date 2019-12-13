@@ -1,0 +1,92 @@
+<?PHP
+// Ce template est le squelette pour les pages de l'administration
+?>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" lang="fr">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf8" />
+<!-- Titre et favicon -->
+<title><?PHP print (get_intitule ("", $GLOBALS["affiche_page"]["parametres"]["titre_page"], array()));?></title>
+<link rel="icon" type="image/png" href="<?PHP print($GLOBALS["affiche_page"]["parametres"]["favicon"]) ?>" />
+
+<!-- CSS  -->
+<link rel="stylesheet" type="text/css" href="css/defaut.css"/>
+<link rel="stylesheet" type="text/css" href="js/yui/fonts/fonts-min.css" />
+<link rel="stylesheet" type="text/css" href="js/yui/menu/assets/skins/sam/menu.css"/> 
+<?PHP affiche_template ($GLOBALS["affiche_page"]["template"]["tmpl_css"], array()); ?>
+
+
+<!-- JAVASCRIPT --> 
+<script language="javascript">
+var intitules = new Array();
+intitules["erreur_connexion"]="<?PHP print(get_intitule("erreurs/messages_erreur", "erreur_connexion", array()));  ?>";
+</script>
+
+
+<?PHP affiche_template ($GLOBALS["affiche_page"]["template"]["tmpl_js_div"], array()); ?>
+<?PHP affiche_template ($GLOBALS["affiche_page"]["template"]["tmpl_js_barres_et_menus"], array()); ?>
+<?PHP 
+if (! isset($param_tmpl_js)) {
+    $param_tmpl_js = array(); // paramètres éventuelement passés à main VIA squelette
+}
+
+affiche_template ($GLOBALS["affiche_page"]["template"]["tmpl_javascript"], $param_tmpl_js); ?>
+
+<?PHP affiche_template ("div/include_js_et_css.php", array()); ?>
+
+
+
+</head>
+<body class="yui-skin-sam" onload="init()">
+
+<!-- Case à cocher permettant d'ouvrir le lien dans un nouvel onglet -->
+
+<div class="barre_icone" style=" top:0 ; left:0 ; width:4% ; height:24 ">
+<table><tr>
+<td><img src="IMG/icones/application_double.png" title="Ouvrir le lien dans un nouvel onglet" alt="Ouvrir le lien dans un nouvel onglet"/></td>
+<td><input type="checkbox" id="bool_open_new" /></td>
+</tr></table>
+
+</div>
+
+<!--  Barres de menus barre1 = menus propres au module (navigation entre les pages), menu2 = fonctions propres à la page en cours  -->
+
+<div id="barre_menus1_div" class="barre_icone" style=" top:0 ; left:4% ; width:40% ; height:24 ; border:0"></div>
+<?PHP affiche_template ($GLOBALS["affiche_page"]["template"]["tmpl_barre_menus1"], array("id_barre"=>"barre_menus1")); ?>
+
+<div id="barre_menus2_div" class="barre_icone" style="top:0 ; left:43% ; width:57% ; height:24 ; border:0"></div>
+<?PHP affiche_template ($GLOBALS["affiche_page"]["template"]["tmpl_barre_menus2"], array("id_barre"=>"barre_menus2")); ?>
+
+
+
+
+
+<!--  Barre des icones (raccourcis vers des liens des menus 1 et 2)  -->
+
+<div class="barre_icone" style="top:25 ; left:0 ; width:44% ; ">
+<?PHP affiche_template ($GLOBALS["affiche_page"]["template"]["tmpl_barre_icones1"], array("id_barre"=>"barre_icones1")); ?>
+</div>
+<div class="barre_icone" style=" ; top:25 ; left:43% ; width:57% ; ">
+<?PHP affiche_template ($GLOBALS["affiche_page"]["template"]["tmpl_barre_icones2"], array("id_barre"=>"barre_icones2")); ?>
+</div>
+
+
+<!--  Barre latérale  -->
+
+<div class="squelette" style="background-image:url(IMG/artistik/anka12.jpg); top:59 ; left:0 ; width:200 ; height:800px ; border-right-width:1 ; border-right-style:solid ; border-right-color:grey">
+<?PHP affiche_template ($GLOBALS["affiche_page"]["template"]["tmpl_barre_acces"], array()); ?>
+</div>
+
+<!--  Coeur de la page -->
+<!--<div class="squelette" style="top:52 ; left:200 ; width:100% ; height:100%">-->
+<div class="squelette" style="top:59 ; left:200 ; width:100% ; height:100%">
+
+<?PHP 
+if (! isset($param_tmpl_main)) {
+    $param_tmpl_main = array(); // paramètres éventuelement passés à main VIA squelette
+}
+affiche_template ($GLOBALS["affiche_page"]["template"]["tmpl_main"], $param_tmpl_main); ?>
+</div>
+<div id="div_menu_contextuel"></div>
+</body>
+</html>

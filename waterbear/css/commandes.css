@@ -1,0 +1,41 @@
+.add_2_commande_table {
+    border-width: 0px;
+    border-style: solid;
+    width: 90%;
+}
+
+.add_2_commande_label {
+    border-width: 0px;
+    border-style: solid;
+}
+
+tr.add_2_commande_autocomplete {
+    border-width: 0px;
+    border-style: solid;
+}
+
+td.add_2_commande_autocomplete {
+    border-width: 0px;
+    border-style: solid;
+    width: 80%;
+}
+
+td.add_2_commande_icones {
+    border-width: 0px;
+    border-style: solid;
+    width: 20%;
+}
+
+.reception_commande_table {
+    width: 90%;
+}
+
+td#aide_saisie {
+    border-style: solid;
+    border-color: #808080;
+    border-width: 1px;
+    height: 50px;
+    padding: 5px;
+    background-color: #EDF5FF;
+    
+}
